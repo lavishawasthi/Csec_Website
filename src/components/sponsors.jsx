@@ -48,11 +48,15 @@ export default function Sponsors() {
             className="pointer-events-none absolute left-1/2 top-1/2 h-52 w-[92%] max-w-5xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-500/20 blur-[90px]"
           />
 
-          <div className="relative mx-auto flex h-[340px] w-full max-w-5xl flex-col items-center justify-center overflow-hidden rounded-[3rem] border-2 border-purple-500/40 px-6 py-10 shadow-[0_0_45px_rgba(168,85,247,0.25)] md:h-[420px] md:px-12">
+          <div className="relative mx-auto flex h-[260px] sm:h-[300px] md:h-[340px] lg:h-[420px] w-full max-w-5xl flex-col items-center justify-center overflow-hidden rounded-[2rem] sm:rounded-[3rem] border-2 border-purple-500/40 px-4 sm:px-6 py-8 sm:py-10 shadow-[0_0_45px_rgba(168,85,247,0.25)] md:px-12">
             <div className="pointer-events-none absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(to right, #ffffff12 1px, transparent 1px), linear-gradient(to bottom, #ffffff12 1px, transparent 1px)', backgroundSize: '34px 34px' }} />
-         
 
-            <div className="relative z-10 mb-5 rounded-full border border-purple-300/35 bg-purple-500/15 p-5 shadow-[0_0_24px_rgba(168,85,247,0.35)] md:p-6">
+
+            <h3 className="relative z-10 text-center text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-black uppercase tracking-tighter text-white mb-5">
+              Powered By
+            </h3>
+
+            <div className="relative z-10 rounded-full border border-purple-300/35 bg-purple-500/15 p-5 shadow-[0_0_24px_rgba(168,85,247,0.35)] md:p-6">
               <img
                 src="/sponsors/unstop.webp"
                 alt="Unstop"
@@ -61,10 +65,6 @@ export default function Sponsors() {
                 loading="lazy"
               />
             </div>
-
-            <h3 className="relative z-10 text-center text-4xl font-black uppercase tracking-tighter text-white md:text-6xl">
-              Powered By
-            </h3>
 
             <div className="relative z-10 my-4 h-[3px] w-20 rounded-full bg-purple-400 shadow-[0_0_20px_#a855f7]" />
 
@@ -89,7 +89,7 @@ export default function Sponsors() {
               {marqueeLogos.map((logo, idx) => (
                 <div
                   key={idx}
-                  className="flex-shrink-0 flex items-center justify-center p-10 w-80 h-48 rounded-3xl group relative overflow-hidden"
+                  className="flex-shrink-0 flex items-center justify-center p-6 sm:p-8 md:p-10 w-52 h-32 sm:w-64 sm:h-40 md:w-80 md:h-48 rounded-3xl group relative overflow-hidden"
                 >
                   {/* Gradient Background */}
                   <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 via-transparent to-pink-500/10 rounded-3xl" />
