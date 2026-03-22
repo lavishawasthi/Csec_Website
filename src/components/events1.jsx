@@ -1,21 +1,29 @@
 "use client";
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Terminal, Zap, Layers, ChevronRight, Sparkles } from 'lucide-react';
 
 // --- Individual Event Card Component ---
-const EventCard = ({ title, description, link, icon: Icon, delay }) => {
+const EventCard = ({ title, description, link, icon: Icon, delay, comingSoon, onComingSoonClick }) => {
   // Logic to determine if this specific card should be bigger (CodeArena)
   const isFeatured = title === "CodeArena";
+
+  const handleCardClick = (event) => {
+    if (!comingSoon) return;
+    event.preventDefault();
+    onComingSoonClick?.(title);
+  };
 
   return (
     <motion.a 
       href={link}
+      onClick={handleCardClick}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay }}
+      aria-disabled={comingSoon}
       className={`block w-full ${isFeatured ? 'md:w-[42%] h-[55vh] z-20' : 'md:w-[29%] h-[45vh] z-10'} [perspective:1200px] group`}
     >
       <motion.div
@@ -79,7 +87,7 @@ const EventCard = ({ title, description, link, icon: Icon, delay }) => {
           
           <div className={`mt-8 flex items-center gap-2 text-[10px] font-bold text-white uppercase tracking-widest px-8 py-3 rounded-full border transition-all duration-300
             ${isFeatured ? 'bg-purple-600/20 border-purple-500 hover:bg-white hover:text-black' : 'bg-white/5 border-white/10 hover:bg-white hover:text-black'}`}>
-            Initialize Mission <ChevronRight size={14} />
+            {comingSoon ? 'Reveals Soon' : 'Initialize Mission'} <ChevronRight size={14} />
           </div>
         </div>
       </motion.div>
@@ -90,6 +98,11 @@ const EventCard = ({ title, description, link, icon: Icon, delay }) => {
 // --- Main Events Section ---
 const Events = () => {
   const sectionRef = useRef(null);
+  const [isSoonModalOpen, setIsSoonModalOpen] = useState(false);
+
+  const openSoonModal = (eventTitle) => {
+    setIsSoonModalOpen(true);
+  };
 
   const eventData = [
     {
@@ -97,7 +110,8 @@ const Events = () => {
       icon: Terminal,
       description: "Sector: Up To Skills. Mission: DSA Logic Gauntlet. Launching: April 5th. Test your algorithmic speed and precision in a high-stakes competitive quiz.",
       link: "/codearena",
-      delay: 0.1
+      delay: 0.1,
+      comingSoon: true
     },
     {
       title: "CodeArena",
@@ -111,7 +125,8 @@ const Events = () => {
       icon: Layers,
       description: "Sector: AI-Symmetry. Mission: LLM Prompt Engineering. Active: March 25 – April 4. Leverage the power of the machine to build at the speed of thought.",
       link: "/codearena",
-      delay: 0.3
+      delay: 0.3,
+      comingSoon: true
     }
   ];
 
@@ -158,9 +173,34 @@ const Events = () => {
               description={event.description}
               link={event.link}
               delay={event.delay}
+              comingSoon={event.comingSoon}
+              onComingSoonClick={openSoonModal}
             />
           ))}
         </div>
+
+        {isSoonModalOpen && (
+          <div
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/70 px-6"
+            onClick={() => setIsSoonModalOpen(false)}
+          >
+            <div
+              className="w-full max-w-md rounded-3xl border border-purple-400/30 bg-zinc-950/95 p-8 text-center shadow-2xl shadow-purple-900/40"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <p className="text-[11px] font-black uppercase tracking-[0.35em] text-purple-300">Status Update</p>
+
+              <p className="mt-4 text-sm leading-relaxed text-zinc-300">This mission will be revealed soon. Stay tuned for the official launch.</p>
+              <button
+                type="button"
+                onClick={() => setIsSoonModalOpen(false)}
+                className="mt-6 rounded-full border border-purple-400/40 bg-purple-500/20 px-6 py-2 text-xs font-bold uppercase tracking-[0.25em] text-white transition hover:bg-purple-500/35"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
 
       </div>
     </section>
